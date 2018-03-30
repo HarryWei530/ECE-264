@@ -268,7 +268,7 @@ int main(){
                 pushbuf = vect[2];
                 stringstream buf(pushbuf);
                 buf >> S;
-                (*st)->push(S.c_str());
+                (*st)->push(S);
                 W = 1;
                 break;
               }
@@ -288,7 +288,7 @@ int main(){
             if((*it)->retrievename() == vect[1]){
               out = (*it)->pop();
               if(out == NULL){
-                outfile << "ERROR: This List is Empty!\n";
+                outfile << "ERROR: This list is empty!\n";
               } else{
                 outfile << "Value popped: " << out << "\n";
               }
@@ -304,7 +304,7 @@ int main(){
             if((*dt)->retrievename() == vect[1]){
               outd = (*dt)->pop();
               if(outd == NULL){
-                outfile << "ERROR: This List is Empty!\n";
+                outfile << "ERROR: This list is empty!\n";
               } else{
                 outfile << "Value popped: " << outd << "\n";
               }
@@ -323,13 +323,13 @@ int main(){
                 stringstream buf(teststring1);
                 buf >> S1;
               } catch(logic_error &e){
-                outfile << "ERROR: This List is Empty!\n";
+                outfile << "ERROR: This list is empty!\n";
                 K = 1;
                 Q = 1;
                 break;
               }
               if(K == 0){
-                outfile << "Value Popped: " << S1 << "\n";
+                outfile << "Value popped: " << S1 << "\n";
                 Q = 1;
                 break;
               }

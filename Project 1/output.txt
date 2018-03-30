@@ -14,22 +14,22 @@ PROCESSING COMMAND: push s99 World
 PROCESSING COMMAND: pop i2
 Value popped: 100
 PROCESSING COMMAND: pop s99
-Value Popped: World
+Value popped: World
 PROCESSING COMMAND: push s99 planet
 PROCESSING COMMAND: pop i2
 Value popped: -50
 PROCESSING COMMAND: push i2 150
 PROCESSING COMMAND: pop s99
-Value Popped: planet
+Value popped: planet
 PROCESSING COMMAND: pop s99
-Value Popped: planet
+Value popped: planet
 PROCESSING COMMAND: create d99 stack
 PROCESSING COMMAND: push d99 0.123
 PROCESSING COMMAND: push d99 -0.456
 PROCESSING COMMAND: pop d99
 Value popped: -0.456
 PROCESSING COMMAND: pop s99
-ERROR: This List is Empty!
+ERROR: This list is empty!
 PROCESSING COMMAND: push dHelloWorld 0.5
 ERROR: This name does not exist!
 PROCESSING COMMAND: pop dHelloWorld
@@ -49,7 +49,7 @@ PROCESSING COMMAND: push dHelloWorld 3.14
 PROCESSING COMMAND: pop i2
 Value popped: 150
 PROCESSING COMMAND: pop i2
-ERROR: This List is Empty!
+ERROR: This list is empty!
 PROCESSING COMMAND: push dHelloWorld 3.1415
 PROCESSING COMMAND: push dHelloPlanet -60.5
 PROCESSING COMMAND: push dHelloWorld -1
@@ -61,20 +61,20 @@ PROCESSING COMMAND: pop sR2D2
 ERROR: This name does not exist!
 PROCESSING COMMAND: create sR2D2 queue
 PROCESSING COMMAND: pop sR2D2
-ERROR: This List is Empty!
+ERROR: This list is empty!
 PROCESSING COMMAND: push sR2D2 123abcDEF
 PROCESSING COMMAND: push sR2D2 G4H5I6j7k8l9
 PROCESSING COMMAND: pop sR2D2
-Value Popped: G4H5I6j7k8l9
+Value popped: G4H5I6j7k8l9
 PROCESSING COMMAND: pop sR2D2
-Value Popped: G4H5I6j7k8l9
+Value popped: G4H5I6j7k8l9
 PROCESSING COMMAND: pop sR2D2
-ERROR: This List is Empty!
+ERROR: This list is empty!
 PROCESSING COMMAND: pop dHelloWorld
 Value popped: 3.1415
 PROCESSING COMMAND: pop dHelloWorld
 Value popped: 3.14
 PROCESSING COMMAND: pop dHelloWorld
-ERROR: This List is Empty!
+ERROR: This list is empty!
 PROCESSING COMMAND: 
-ERROR: This List is Empty!
+ERROR: This list is empty!
