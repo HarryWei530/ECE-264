@@ -22,7 +22,7 @@ PROCESSING COMMAND: push i2 150
 PROCESSING COMMAND: pop s99
 Value popped: planet
 PROCESSING COMMAND: pop s99
-Value popped: planet
+Value popped: Hello
 PROCESSING COMMAND: create d99 stack
 PROCESSING COMMAND: push d99 0.123
 PROCESSING COMMAND: push d99 -0.456
@@ -65,7 +65,7 @@ ERROR: This list is empty!
 PROCESSING COMMAND: push sR2D2 123abcDEF
 PROCESSING COMMAND: push sR2D2 G4H5I6j7k8l9
 PROCESSING COMMAND: pop sR2D2
-Value popped: G4H5I6j7k8l9
+Value popped: 123abcDEF
 PROCESSING COMMAND: pop sR2D2
 Value popped: G4H5I6j7k8l9
 PROCESSING COMMAND: pop sR2D2
@@ -75,6 +75,4 @@ Value popped: 3.1415
 PROCESSING COMMAND: pop dHelloWorld
 Value popped: 3.14
 PROCESSING COMMAND: pop dHelloWorld
-ERROR: This list is empty!
-PROCESSING COMMAND: 
 ERROR: This list is empty!
