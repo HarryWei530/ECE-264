@@ -102,7 +102,7 @@ public:
     this->insertEnd(type);
   }
   T pop(){
-    this->removeEnd();
+    return(this->removeEnd());
   }
 };
 
@@ -117,7 +117,7 @@ public:
     this->insertStart(type);
   }
   T pop(){
-    this->removeEnd();
+    return(this->removeEnd());
   }
 };
 
