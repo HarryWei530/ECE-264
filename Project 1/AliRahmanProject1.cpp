@@ -12,7 +12,6 @@ by line performing the specified commands, create, push, or pop.
 #include <string>
 #include <cstdio>
 #include <cstring>
-#include <cstdlib>
 #include <vector>
 #include <list>
 #include <iterator>
@@ -75,7 +74,7 @@ void SimpleList<T>::insertEnd(T type){
   Node *n = new Node;
   n->data = type;
   n->next = NULL;
-  if(count == 0){
+  if(head == NULL){
     tail = n;
     head = n;
   }
@@ -88,7 +87,7 @@ void SimpleList<T>::insertStart(T type){
   Node *n = new Node;
   n->data = type;
   n->next = NULL;
-  if(count == 0){
+  if(head == NULL){
     tail = n;
     head = n;
   }
@@ -98,8 +97,8 @@ void SimpleList<T>::insertStart(T type){
 }
 template <typename T>
 T SimpleList<T>::removeStart(){
+  T ret = head->data;
   Node *n = head;
-  T ret = n->data;
   head = head->next;
   delete n;     //Frees Memory to avoid Memory Leak
   count--;      //Decreases count to update number of nodes
