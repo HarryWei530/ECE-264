@@ -1,10 +1,10 @@
 /*
-Ali Rahman
-DSA Coding Assignment 1
-This Program contains classes used to define a SimpleList which is used in two
-derived classes, Stack and Queue.  When the program runs it asks the user for
-an input text file and an output text file before reading the input file line
-by line performing the specified commands, create, push, or pop.
+* Ali Rahman
+* DSA Coding Assignment 1
+* This Program contains classes used to define a SimpleList which is used in two
+* derived classes, Stack and Queue.  When the program runs it asks the user for
+* an input text file and an output text file before reading the input file line
+* by line performing the specified commands, create, push, or pop.
 */
 
 #include <iostream>
@@ -12,6 +12,7 @@ by line performing the specified commands, create, push, or pop.
 #include <string>
 #include <cstdio>
 #include <cstring>
+#include <cstdlib>
 #include <vector>
 #include <list>
 #include <iterator>
@@ -20,8 +21,8 @@ by line performing the specified commands, create, push, or pop.
 using namespace std;
 
 void tokenize(const string &s, vector<string> &v){
-  char *dups = strdup(s.c_str());
-  char *token = strtok(dups, " ");
+  char *dups = strdup(s.c_str());       //duplicating input string to avoid overrite
+  char *token = strtok(dups, " ");      //strtok based on spaces
   while(token != NULL){
     v.push_back(string(token));
     token = strtok(NULL, " ");
@@ -38,8 +39,8 @@ protected:
 private:
   class Node{
   public:
-    T data;
-    Node* next;
+    T data;         // type T data variable
+    Node* next;     // pointer to next node
   };
   Node *head; //start
   Node *tail; //end
@@ -59,7 +60,7 @@ template <typename T>
 void SimpleList<T>::init(){
   head = NULL;                  //initializing head and tail nudes to start SimpleList
   tail = NULL;
-  count = 0;
+  count = 0;                    //initializing size of stack/queue to zero
 }
 template <typename T>
 int SimpleList<T>::getSize(){
@@ -72,14 +73,14 @@ void SimpleList<T>::newName(string s){
 template <typename T>
 void SimpleList<T>::insertEnd(T type){
   Node *n = new Node;
-  n->data = type;
+  n->data = type;        //sets data variable in node to input variable
   n->next = NULL;
-  if(head == NULL){
+  if(count == 0){        //if no nodes in list set head and tail to new node
     tail = n;
     head = n;
   }
-  tail->next = n;
-  tail = n;             //moves tail node
+  tail->next = n;       //sets the current tail's next node to the new node
+  tail = n;             //moves tail node to new tail
   count++;              //updates list size
 }
 template <typename T>
@@ -87,19 +88,19 @@ void SimpleList<T>::insertStart(T type){
   Node *n = new Node;
   n->data = type;
   n->next = NULL;
-  if(head == NULL){
+  if(count == 0){       //if list is empty then the head and tail of the list are both set to the new node
     tail = n;
     head = n;
   }
-  n->next = this->head;
-  head = n;             //moves head node
+  n->next = this->head; //sets the next node of the current node to the head
+  head = n;             //moves head node to new head
   count++;              //updates list size
 }
 template <typename T>
 T SimpleList<T>::removeStart(){
-  T ret = head->data;
-  Node *n = head;
-  head = head->next;
+  Node *n = head;       //creates node that corresponds to head
+  T ret = n->data;      //obtains return value
+  head = head->next;    //moves head back
   delete n;     //Frees Memory to avoid Memory Leak
   count--;      //Decreases count to update number of nodes
   return ret;
@@ -144,10 +145,10 @@ SimpleList<T>* searchList(list<SimpleList<T> *> *SList, string name){
     for (typename list<SimpleList<T> *>::iterator iter = SList->begin(); iter != SList->end(); iter++){
       //iterates through list to find if stack/queue with specified name exists
       if((*iter)->retrievename() == name){
-        return *iter;                  //returns Stack/Queue that corresponds to name specified
+        return *iter;                  //returns pointer to Stack/Queue that corresponds to name specified
       }
     }
-    return NULL;
+    return NULL;                       //otherwise returns NULL
 }
 
 template <typename T>
@@ -163,7 +164,7 @@ void CreateFunc(list<SimpleList<T> *> *SList, string list_Name, string list_Type
       SimpleList<T> *q = new Queue<T>(list_Name);           //creates new Queue and initializes
       SList->push_back(q);                                  //pushes queue onto appropriate list
     } else{
-      cerr << "ERROR: Invalid List Type!" << endl;
+      cerr << "ERROR: Invalid List Type!" << endl;          //Additional Error Check for list type
     }
   }
 }
@@ -211,10 +212,10 @@ int main(){
   list<SimpleList<string> *> listSLs; //all string stacks and queues
 
   cout << "Enter name of input file: ";
-  std::getline (std::cin,inputfile);
+  getline (cin,inputfile);
 
   cout << "Enter name of output file: ";
-  std::getline (std::cin,outputfile);
+  getline (cin,outputfile);
 
   infile.open(inputfile.c_str());         //open doesn't take strings as inputs
   if(!infile){                            //error handling for inputfile
