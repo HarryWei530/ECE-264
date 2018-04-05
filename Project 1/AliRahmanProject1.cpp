@@ -1,11 +1,11 @@
 /*
-* Ali Rahman
-* DSA Coding Assignment 1
-* This Program contains classes used to define a SimpleList which is used in two
-* derived classes, Stack and Queue.  When the program runs it asks the user for
-* an input text file and an output text file before reading the input file line
-* by line performing the specified commands, create, push, or pop.
-*/
+ * Ali Rahman
+ * DSA Coding Assignment 1
+ * This Program contains classes used to define a SimpleList which is used in two
+ * derived classes, Stack and Queue.  When the program runs it asks the user for
+ * an input text file and an output text file before reading the input file line
+ * by line performing the specified commands, create, push, or pop.
+ */
 
 #include <iostream>
 #include <fstream>
