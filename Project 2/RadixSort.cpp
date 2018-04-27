@@ -126,7 +126,11 @@ int main() {
 // You may add global variables, functions, and/or
 // class defintions here if you wish.
 
+#define RANGE 127
+
 list<Data *>::iterator i, notsorted, lastsorted, next_sort, later_sorted;
+
+const int RUN = 32;
 
 void insertionSort(list<Data *> &l){
   i = l.begin();
@@ -139,8 +143,81 @@ void insertionSort(list<Data *> &l){
   }
 }
 
+void countSort(vector<Data *> &v)
+{
+    // The output character array that will have sorted arr
+    vector<Data *> vi(v.size());
 
-int getMax(list<Data *> &l){
+    // Create a count array to store count of inidividul
+    // characters and initialize count array as 0
+    int count[RANGE + 1], z;
+    memset(count, 0, sizeof(count));
+
+    // Store count of each character
+    for(z = 0; v[z]; ++z)
+        ++count[v[z]->val3];
+
+    // Change count[i] so that count[i] now contains actual
+    // position of this character in output array
+    for (z = 1; z <= RANGE; ++z)
+        count[z] += count[z-1];
+
+    // Build the output character array
+    for (z = 0; v[z]; ++z)
+    {
+        vi[count[v[z]->val3]-1] = v[z];
+        --count[v[z]->val3];
+    }
+
+    // Copy the output array to arr, so that arr now
+    // contains sorted characters
+    v.swap(vi);
+}
+
+int getMax2(list<Data *> &l){
+    i = l.begin();
+    int mx = (*i)->val2;
+    for (i = l.begin(); i != l.end(); i++){
+      if ((*i)->val2 > mx)
+          mx = (*i)->val2;
+    }
+    return mx;
+}
+
+void countSort2(vector<Data *> &v, int exp){
+  vector<Data *> vi(v.size());
+  int count[10] = {0};
+  int z = 0;
+  for (z = 0; z < v.size(); z++){
+    count[(((v[z])->val2)/exp)%10]++;
+  }
+  for (int k = 1; k < 10; k++){
+    count[k] += count[k - 1];
+  }
+  int n = 1;
+  z = v.size();
+  z--;
+  while (n){
+    vi[count[(((v[z])->val2)/ exp) % 10] - 1] = (v[z]);
+    count[ (((v[z])->val2)/exp)%10 ]--;
+    if(z == 0){
+      break;
+    }
+    z--;
+  }
+  v.swap(vi);
+}
+
+void RadixSort2(list<Data *> &l){
+  vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
+  int m  = getMax2(l);
+  for (int exp = 1; m/exp > 0; exp *= 10)
+      countSort2(v, exp);
+  list<Data *> newList(v.begin(), v.end());
+  l.swap(newList);
+}
+
+int getMax3(list<Data *> &l){
     i = l.begin();
     int mx = (*i)->val3;
     for (i = l.begin(); i != l.end(); i++){
@@ -150,25 +227,22 @@ int getMax(list<Data *> &l){
     return mx;
 }
 
-void countSort(vector<Data *> v, int exp){
+void countSort3(vector<Data *> &v, int exp){
+  vector<Data *> vi(v.size());
   int count[10] = {0};
-  for (int z = 0; z < v.size(); z++){
+  int z = 0;
+  for (z = 0; z < v.size(); z++){
     count[(((v[z])->val3)/exp)%10]++;
   }
   for (int k = 1; k < 10; k++){
     count[k] += count[k - 1];
   }
   int n = 1;
-  int z = v.size();
+  z = v.size();
   z--;
-  vector<Data *> vi(v.size());
-
   while (n){
-    cerr << z << ": " << (((v[z])->val3)/ exp) % 10 << endl;
-    vi[count[(((v[z])->val3)/ exp) % 10] - 1] = v[z];
-    //cerr << z << ": " << vi[z]->val3 << endl;
+    vi[count[(((v[z])->val3)/ exp) % 10] - 1] = (v[z]);
     count[ (((v[z])->val3)/exp)%10 ]--;
-    cerr << z << ": " << vi[z]->val3 << endl;
     if(z == 0){
       break;
     }
@@ -177,27 +251,69 @@ void countSort(vector<Data *> v, int exp){
   v.swap(vi);
 }
 
-void RadixSort(list<Data *> &l){
-  int m  = getMax(l);
+void RadixSort3(list<Data *> &l){
   vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
-  for (int exp = 1; m/exp > 0; exp *= 10){
-    countSort(v, exp);
-  }
-  list<Data *> new_list(v.begin(), v.end());
-  l.swap(new_list);
+  int m  = getMax3(l);
+  for (int exp = 1; m/exp > 0; exp *= 10)
+      countSort3(v, exp);
+  list<Data *> newList(v.begin(), v.end());
+  l.swap(newList);
 }
 
-bool cmp1(const Data* a1, const Data* a2){
-  return(a1->val1 < a2->val1);
+void merge(vector<Data *> &v, int start, int m, int r){
+  int x, y, z;
+  int n1 = m - start + 1;
+  int n2 = r - m;
+  vector<Data *> Left(n1);
+  vector<Data *> Right(n2);
+  for(x = 0; x < n1; x++){
+    Left[x] = v[start + x];
+  }
+  for(y = 0; y < n2; y++){
+    Right[y] = v[m + 1 + y];
+  }
+  x = 0;
+  y = 0;
+  z = start;
+  while(x < n1 && y < n2){
+    if(Left[x]->val1 <= Right[y]->val1){
+      v[z] = Left[x];
+      x++;
+    } else{
+      v[z] = Right[y];
+      y++;
+    }
+    z++;
+  }
+  while(x < n1){
+    v[z] = Left[x];
+    x++;
+    z++;
+  }
+  while(y < n2){
+    v[z] = Right[y];
+    y++;
+    z++;
+  }
+}
+
+void mergeSort(vector<Data *> &v, int start, int r){
+  if (start < r){
+      int m = start+(r-start)/2;
+      mergeSort(v, start, m);
+      mergeSort(v, m+1, r);
+      merge(v, start, m, r);
+    }
+}
+
+void timSort(list<Data *> &l){
+  int nt = l.size() - 1;
 }
 
 bool cmp2(const Data* a1, const Data* a2){
   return(a1->val2 < a2->val2);
 }
 
-bool cmp3(const Data* a1, const Data* a2){
-  return(a1->val3 < a2->val3);
-}
 
 bool cmp4(const Data* a1, const Data* a2){
   return(a1->val4 < a2->val4);
@@ -206,14 +322,24 @@ bool cmp4(const Data* a1, const Data* a2){
 void sortDataList(list<Data *> &l, int field) {
   // Fill in this function
   if(field == 1){
+    vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
+    int vsize = v.size();
+    /*mergeSort(v, 0, vsize - 1);
+    list<Data *> newList(v.begin(), v.end());
+    l.swap(newList);*/
     insertionSort(l);
   } else if(field == 2){
-    vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
+    /*vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
     stable_sort(v.begin(), v.end(), cmp2);
     list<Data *> newList(v.begin(), v.end());
-    l.swap(newList);
+    l.swap(newList);*/
+    RadixSort2(l);
   } else if(field == 3){
-    RadixSort(l);
+    //RadixSort3(l);
+    vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
+    countSort(v);
+    list<Data *> newList(v.begin(), v.end());
+    l.swap(newList);
   } else if(field == 4){
     vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
     stable_sort(v.begin(), v.end(), cmp4);
