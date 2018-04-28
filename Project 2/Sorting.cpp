@@ -142,12 +142,12 @@ void insertionSort(list<Data *> &l){
 }
 
 
-int getMax2(list<Data *> &l){
-    i = l.begin();
-    unsigned int mx = (*i)->val2;
-    for (i = l.begin(); i != l.end(); i++){
-      if ((*i)->val2 > mx)
-          mx = (*i)->val2;
+int getMax2(vector<Data *> &v){
+    int q = 0;
+    unsigned int mx = (v[q])->val2;
+    for (q = 0; q < v.size(); q++){
+      if ((v[q])->val2 > mx)
+          mx = (v[q])->val2;
     }
     return mx;
 }
@@ -179,7 +179,7 @@ void countSort2(vector<Data *> &v, int exp, int BASE){
 void RadixSort2(list<Data *> &l){
   int BASE = 500000;
   vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
-  unsigned int m  = getMax2(l);
+  unsigned int m  = getMax2(v);
   for (unsigned long exp = 1; m/exp > 0; exp *= BASE){
     countSort2(v, exp, BASE);
   }
@@ -187,12 +187,12 @@ void RadixSort2(list<Data *> &l){
   l.swap(newList);
 }
 
-int getMax3(list<Data *> &l){
-    i = l.begin();
-    unsigned int mx = (*i)->val3;
-    for (i = l.begin(); i != l.end(); i++){
-      if ((*i)->val3 > mx)
-          mx = (*i)->val3;
+int getMax3(vector<Data *> &v){
+    int q = 0;
+    unsigned int mx = (v[q])->val3;
+    for (q = 0; q < v.size(); q++){
+      if ((v[q])->val3 > mx)
+          mx = (v[q])->val3;
     }
     return mx;
 }
@@ -224,7 +224,7 @@ void countSort3(vector<Data *> &v, int exp, int BASE){
 void RadixSort3(list<Data *> &l){
   int BASE = 92;
   vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
-  unsigned int m  = getMax3(l);
+  unsigned int m  = getMax3(v);
   for (unsigned long exp = 1; m/exp > 0; exp *= BASE){
     countSort3(v, exp, BASE);
   }
