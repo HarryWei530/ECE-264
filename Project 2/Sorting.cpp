@@ -238,7 +238,7 @@ void countSort3(vector<Data *> &v, int exp, int BASE){
 }
 
 void RadixSort3(list<Data *> &l){
-  int BASE = 92;
+  int BASE = 127;
   vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
   unsigned int m  = getMax3(v);
   for (unsigned long exp = 1; m/exp > 0; exp *= BASE){
@@ -258,24 +258,20 @@ string getMax4(vector<Data *> &v){
 }
 
 void countSort4(vector<Data *> &v, unsigned long exp, int BASE){
-  int chars = 4;
   vector<Data *> vi(v.size());
   int count[BASE] = {0};
   int z = 0;
-  for(int w = 0; w < 1; w++){
     for (z = 0; z < v.size(); z++){
       int temp = (v[z]->val4[0] * 1000000) + (v[z]->val4[1] * 1000) + (v[z]->val4[2] * 1);
-      count[(temp/exp)%BASE]++;
+      count[(temp/exp) % BASE]++;
     }
     for (int k = 1; k < BASE; k++){
       count[k] += count[k - 1];
     }
     int n = 1;
-    z = v.size();
-    z--;
+    z = v.size() -1;
     while (n){
       int temp = (v[z]->val4[0] * 1000000) + (v[z]->val4[1] * 1000) + (v[z]->val4[2] * 1);
-      //cerr << (temp/exp) % BASE << endl;
       vi[count[(temp/exp) % BASE] - 1] = (v[z]);
       count[ (temp/exp) % BASE ]--;
       if(z == 0){
@@ -283,9 +279,7 @@ void countSort4(vector<Data *> &v, unsigned long exp, int BASE){
       }
       z--;
     }
-}
     v.swap(vi);
-    vi.clear();
 }
 
 void Sort4(list<Data *> &l){
