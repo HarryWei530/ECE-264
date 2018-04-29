@@ -141,6 +141,22 @@ void insertionSort(list<Data *> &l){
   }
 }
 
+void insertionSort4(vector<Data *> &v)
+{
+  int it, j;
+  Data* tmp;
+   for (it = 1; it < v.size(); it++){
+       j = it;
+       tmp = v[it];
+       while (j > 0 && tmp->val4 < v[j-1]->val4)
+       {
+             v[j] = v[j-1];
+             j--;
+       }
+       v[j]=tmp;
+    }
+}
+
 
 int getMax2(vector<Data *> &v){
     int q = 0;
@@ -232,8 +248,55 @@ void RadixSort3(list<Data *> &l){
   l.swap(newList);
 }
 
-bool cmp4(const Data* a1, const Data* a2){
-  return(a1->val4 < a2->val4);
+string getMax4(vector<Data *> &v){
+    string max = v[0]->val4;
+    for (int q = 1; q < v.size() ; q++){
+        if (v[q]->val4 > max)
+            max = v[q]->val4;
+    }
+    return max;
+}
+
+void countSort4(vector<Data *> &v, int exp, int BASE){
+  int chars = 4;
+  vector<Data *> vi(v.size());
+  int count[BASE] = {0};
+  int z = 0;
+  for(w = 0; w < 4; w++){
+    for (z = 0; z < v.size(); z++){
+      int temp = (v[z]->val4[0] * 1000000) + (v[z]->val4[1] * 1000) + (v[z]->val4[2] * 1);
+      count[(temp/exp)%BASE]++;
+    }
+    for (int k = 1; k < BASE; k++){
+      count[k] += count[k - 1];
+    }
+    int n = 1;
+    z = v.size();
+    z--;
+    while (n){
+      int temp = (v[z]->val4[0] * 1000000) + (v[z]->val4[1] * 1000) + (v[z]->val4[2] * 1);
+      vi[count[(temp/exp) % BASE] - 1] = (v[z]);
+      count[ (temp/exp) % BASE ]--;
+      if(z == 0){
+        break;
+      }
+      z--;
+    }
+    v.swap(vi);
+}
+}
+
+void Sort4(list<Data *> &l){
+  int BASE = 127;
+  vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
+  string m  = getMax4(v);
+  unsigned int mx = (m[0] * 1000000) + (m[1] * 1000) + (m[2] * 1);
+  for (unsigned long exp = 1; mx/exp > 0; exp *= 1000){
+    countSort4(v, exp, BASE);
+  }
+  insertionSort4(v);
+  list<Data *> newList(v.begin(), v.end());
+  l.swap(newList);
 }
 
 void sortDataList(list<Data *> &l, int field) {
@@ -245,9 +308,6 @@ void sortDataList(list<Data *> &l, int field) {
   } else if(field == 3){
     RadixSort3(l);
   } else if(field == 4){
-    vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
-    stable_sort(v.begin(), v.end(), cmp4);
-    list<Data *> newList(v.begin(), v.end());
-    l.swap(newList);
+    Sort4(l);
   }
 }
