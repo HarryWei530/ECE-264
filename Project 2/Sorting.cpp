@@ -127,7 +127,7 @@ int main() {
 // class defintions here if you wish.
 
 
-list<Data *>::iterator i, notsorted, lastsorted, next_sort, later_sorted;
+list<Data *>::iterator i, notsorted, lastsorted;
 
 
 void insertionSort(list<Data *> &l){
@@ -153,7 +153,7 @@ void insertionSort4(vector<Data *> &v)
              v[j] = v[j-1];
              j--;
        }
-       v[j]=tmp;
+       v[j] = tmp;
     }
 }
 
@@ -257,12 +257,12 @@ string getMax4(vector<Data *> &v){
     return max;
 }
 
-void countSort4(vector<Data *> &v, int exp, int BASE){
+void countSort4(vector<Data *> &v, unsigned long exp, int BASE){
   int chars = 4;
   vector<Data *> vi(v.size());
   int count[BASE] = {0};
   int z = 0;
-  for(w = 0; w < 4; w++){
+  for(int w = 0; w < 1; w++){
     for (z = 0; z < v.size(); z++){
       int temp = (v[z]->val4[0] * 1000000) + (v[z]->val4[1] * 1000) + (v[z]->val4[2] * 1);
       count[(temp/exp)%BASE]++;
@@ -275,6 +275,7 @@ void countSort4(vector<Data *> &v, int exp, int BASE){
     z--;
     while (n){
       int temp = (v[z]->val4[0] * 1000000) + (v[z]->val4[1] * 1000) + (v[z]->val4[2] * 1);
+      //cerr << (temp/exp) % BASE << endl;
       vi[count[(temp/exp) % BASE] - 1] = (v[z]);
       count[ (temp/exp) % BASE ]--;
       if(z == 0){
@@ -282,12 +283,13 @@ void countSort4(vector<Data *> &v, int exp, int BASE){
       }
       z--;
     }
-    v.swap(vi);
 }
+    v.swap(vi);
+    vi.clear();
 }
 
 void Sort4(list<Data *> &l){
-  int BASE = 127;
+  int BASE = 1000;
   vector<Data *> v{ make_move_iterator(begin(l)), make_move_iterator(end(l)) };
   string m  = getMax4(v);
   unsigned int mx = (m[0] * 1000000) + (m[1] * 1000) + (m[2] * 1);
